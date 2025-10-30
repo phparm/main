@@ -1,0 +1,40 @@
+{
+    "name": "phparm/main",
+    "description": "xxx",
+    "license": "MIT",
+    "type": "library",
+    "keywords": [
+        "php",
+        "utility",
+        "utilities"
+    ],
+    "authors": [
+        {
+            "name": "GHJayce",
+            "email": "jaycedeng@outlook.com",
+            "homepage": "https://github.com/GHJayce",
+            "role": "Developer"
+        }
+    ],
+    "homepage": "https://github.com/phparm/main",
+    "require": {
+        "php": "^8.2"
+    },
+    "require-dev": {
+        "symplify/monorepo-builder": "^12.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Phparm\\PackA\\": "src/PackA/src/",
+            "Phparm\\PackB\\": "src/PackB/src/"
+        }
+    },
+    "replace": {
+        "phparm/pack-a": "self.version",
+        "phparm/pack-b": "self.version"
+    },
+    "support": {
+        "issues": "https://github.com/phparm/main/issues",
+        "docs": "https://phparm.github.io/main"
+    }
+}

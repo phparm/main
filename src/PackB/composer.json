@@ -1,0 +1,32 @@
+{
+    "name": "phparm/pack-b",
+    "description": "xxx",
+    "license": "MIT",
+    "type": "library",
+    "keywords": [
+        "php",
+        "utility",
+        "utilities"
+    ],
+    "authors": [
+        {
+            "name": "GHJayce",
+            "email": "jaycedeng@outlook.com",
+            "homepage": "https://github.com/GHJayce",
+            "role": "Developer"
+        }
+    ],
+    "homepage": "https://github.com/phparm/pack-b",
+    "support": {
+        "issues": "https://github.com/phparm/pack-b/issues",
+        "docs": "https://phparm.github.io/pack-b"
+    },
+    "require": {
+        "php": "^8.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Phparm\\PackB\\": "src/"
+        }
+    }
+}

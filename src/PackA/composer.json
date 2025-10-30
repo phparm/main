@@ -1,0 +1,32 @@
+{
+    "name": "phparm/pack-a",
+    "description": "xxx",
+    "license": "MIT",
+    "type": "library",
+    "keywords": [
+        "php",
+        "utility",
+        "utilities"
+    ],
+    "authors": [
+        {
+            "name": "GHJayce",
+            "email": "jaycedeng@outlook.com",
+            "homepage": "https://github.com/GHJayce",
+            "role": "Developer"
+        }
+    ],
+    "homepage": "https://github.com/phparm/pack-a",
+    "support": {
+        "issues": "https://github.com/phparm/pack-a/issues",
+        "docs": "https://phparm.github.io/pack-a"
+    },
+    "require": {
+        "php": "^8.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Phparm\\PackA\\": "src/"
+        }
+    }
+}
