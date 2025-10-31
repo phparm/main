@@ -12,7 +12,24 @@ env:
   GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
 jobs:
-  packages_split:
+  get-subdirectories:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Find subdirectories in src
+        id: set-matrix
+        run:
+          # 获取src下所有一级子目录，并转换为JSON数组格式
+          MATRIX_JSON=$(find src -maxdepth 1 -type d ! -path 'src' -exec basename {} \; | jq -R -s -c 'split("\n") | map(select(. != ""))')
+          echo "matrix=$MATRIX_JSON" >> $GITHUB_OUTPUT
+
+  packages_split_pack-a:
+    needs: get-subdirectories
     runs-on: ubuntu-latest
 
     strategy:
@@ -23,6 +40,7 @@ jobs:
           -
             local_path: 'PackA'
             split_repository: 'pack-a'
+            cc: ${{ fromJSON(needs.get-subdirectories.outputs.matrix) }}
 
     steps:
       -   uses: actions/checkout@v2
@@ -57,7 +75,64 @@ jobs:
           package_directory: 'packages/${{ matrix.package.local_path }}'
 
           # ↓ into https://github.com/symplify/easy-coding-standard repository
-          repository_organization: 'symplify'
+          repository_organization: 'phparm'
+          repository_name: '${{ matrix.package.split_repository }}'
+
+          # [optional, with "github.com" as default]
+          #repository_host: git.private.com:1234
+
+          # ↓ the user signed under the split commit
+          user_name: "GHJayce"
+          user_email: "jaycedeng@outlook.com"
+
+  packages_split_pack-b:
+    needs: get-subdirectories
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        # define package to repository map
+        package:
+          -
+            local_path: 'PackB'
+            split_repository: 'pack-b'
+            cc: ${{ fromJSON(needs.get-subdirectories.outputs.matrix) }}
+
+    steps:
+      -   uses: actions/checkout@v2
+
+      # no tag
+      -
+        if: "!startsWith(github.ref, 'refs/tags/')"
+        uses: danharrin/monorepo-split-github-action@v2.4.0
+        with:
+          # ↓ split "packages/easy-coding-standard" directory
+          package_directory: 'src/${{ matrix.package.local_path }}'
+
+          # ↓ into https://github.com/symplify/easy-coding-standard repository
+          repository_organization: 'phparm'
+          repository_name: '${{ matrix.package.split_repository }}'
+
+          # [optional, with "github.com" as default]
+          #repository_host: git.private.com:1234
+
+          # ↓ the user signed under the split commit
+          user_name: "GHJayce"
+          user_email: "jaycedeng@outlook.com"
+
+      # with tag
+      -
+        if: "startsWith(github.ref, 'refs/tags/')"
+        uses: danharrin/monorepo-split-github-action@v2.4.0
+        with:
+          tag: ${GITHUB_REF#refs/tags/}
+
+          # ↓ split "packages/easy-coding-standard" directory
+          package_directory: 'packages/${{ matrix.package.local_path }}'
+
+          # ↓ into https://github.com/symplify/easy-coding-standard repository
+          repository_organization: 'phparm'
           repository_name: '${{ matrix.package.split_repository }}'
 
           # [optional, with "github.com" as default]
