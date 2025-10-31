@@ -28,8 +28,8 @@
         }
     },
     "replace": {
-        "phparm/pack-a": "0.0.4",
-        "phparm/pack-b": "0.0.4"
+        "phparm/pack-a": "0.0.5",
+        "phparm/pack-b": "0.0.5"
     },
     "support": {
         "issues": "https://github.com/phparm/main/issues",
