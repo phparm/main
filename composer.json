@@ -1,8 +1,6 @@
 {
     "name": "phparm/main",
     "description": "xxx",
-    "license": "MIT",
-    "type": "library",
     "keywords": [
         "php",
         "utility",
