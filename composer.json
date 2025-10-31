@@ -6,6 +6,7 @@
         "utility",
         "utilities"
     ],
+    "homepage": "https://github.com/phparm/main",
     "authors": [
         {
             "name": "GHJayce",
@@ -14,7 +15,6 @@
             "role": "Developer"
         }
     ],
-    "homepage": "https://github.com/phparm/main",
     "require": {
         "php": "^8.2"
     },
@@ -28,8 +28,8 @@
         }
     },
     "replace": {
-        "phparm/pack-a": "self.version",
-        "phparm/pack-b": "self.version"
+        "phparm/pack-a": "0.0.4",
+        "phparm/pack-b": "0.0.4"
     },
     "support": {
         "issues": "https://github.com/phparm/main/issues",
