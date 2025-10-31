@@ -12,24 +12,8 @@ env:
   GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
 jobs:
-  get-subdirectories:
-    runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Find subdirectories in src
-        id: set-matrix
-        run:
-          # 获取src下所有一级子目录，并转换为JSON数组格式
-          MATRIX_JSON=$(find src -maxdepth 1 -type d ! -path 'src' -exec basename {} \; | jq -R -s -c 'split("\n") | map(select(. != ""))')
-          echo "matrix=$MATRIX_JSON" >> $GITHUB_OUTPUT
 
   packages_split_pack-a:
-    needs: get-subdirectories
     runs-on: ubuntu-latest
 
     strategy:
@@ -40,7 +24,6 @@ jobs:
           -
             local_path: 'PackA'
             split_repository: 'pack-a'
-            cc: ${{ fromJSON(needs.get-subdirectories.outputs.matrix) }}
 
     steps:
       -   uses: actions/checkout@v2
@@ -86,7 +69,6 @@ jobs:
           user_email: "jaycedeng@outlook.com"
 
   packages_split_pack-b:
-    needs: get-subdirectories
     runs-on: ubuntu-latest
 
     strategy:
@@ -97,7 +79,6 @@ jobs:
           -
             local_path: 'PackB'
             split_repository: 'pack-b'
-            cc: ${{ fromJSON(needs.get-subdirectories.outputs.matrix) }}
 
     steps:
       -   uses: actions/checkout@v2
