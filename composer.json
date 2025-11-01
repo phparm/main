@@ -27,6 +27,11 @@
             "Phparm\\PackB\\": "src/PackB/src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Bin\\Config\\": "bin/config/"
+        }
+    },
     "replace": {
         "phparm/pack-a": "0.0.6",
         "phparm/pack-b": "0.0.6"

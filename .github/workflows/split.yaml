@@ -19,63 +19,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        main_repo: 'phparm'
+        package_dir_base: 'src'
+        commit_name: 'GHJayce'
+        commit_email: 'jaycedeng@outlook.com'
+
         # define package to repository map
         package:
           -
             local_path: 'PackA'
             split_repository: 'pack-a'
-
-    steps:
-      -   uses: actions/checkout@v2
-
-      # no tag
-      -
-        if: "!startsWith(github.ref, 'refs/tags/')"
-        uses: danharrin/monorepo-split-github-action@v2.4.0
-        with:
-          # ↓ split "packages/easy-coding-standard" directory
-          package_directory: 'src/${{ matrix.package.local_path }}'
-
-          # ↓ into https://github.com/symplify/easy-coding-standard repository
-          repository_organization: 'phparm'
-          repository_name: '${{ matrix.package.split_repository }}'
-
-          # [optional, with "github.com" as default]
-          #repository_host: git.private.com:1234
-
-          # ↓ the user signed under the split commit
-          user_name: "GHJayce"
-          user_email: "jaycedeng@outlook.com"
-
-      # with tag
-      -
-        if: "startsWith(github.ref, 'refs/tags/')"
-        uses: danharrin/monorepo-split-github-action@v2.4.0
-        with:
-          tag: ${GITHUB_REF#refs/tags/}
-
-          # ↓ split "packages/easy-coding-standard" directory
-          package_directory: 'src/${{ matrix.package.local_path }}'
-
-          # ↓ into https://github.com/symplify/easy-coding-standard repository
-          repository_organization: 'phparm'
-          repository_name: '${{ matrix.package.split_repository }}'
-
-          # [optional, with "github.com" as default]
-          #repository_host: git.private.com:1234
-
-          # ↓ the user signed under the split commit
-          user_name: "GHJayce"
-          user_email: "jaycedeng@outlook.com"
-
-  packages_split_pack-b:
-    runs-on: ubuntu-latest
-
-    strategy:
-      fail-fast: false
-      matrix:
-        # define package to repository map
-        package:
           -
             local_path: 'PackB'
             split_repository: 'pack-b'
@@ -89,18 +42,18 @@ jobs:
         uses: danharrin/monorepo-split-github-action@v2.4.0
         with:
           # ↓ split "packages/easy-coding-standard" directory
-          package_directory: 'src/${{ matrix.package.local_path }}'
+          package_directory: '${{ matrix.package_dir }}/${{ matrix.package.local_path }}'
 
           # ↓ into https://github.com/symplify/easy-coding-standard repository
-          repository_organization: 'phparm'
+          repository_organization: '${{ matrix.main_repo }}'
           repository_name: '${{ matrix.package.split_repository }}'
 
           # [optional, with "github.com" as default]
           #repository_host: git.private.com:1234
 
           # ↓ the user signed under the split commit
-          user_name: "GHJayce"
-          user_email: "jaycedeng@outlook.com"
+          user_name: "${{ matrix.commit_name }}"
+          user_email: "${{ matrix.commit_email }}"
 
       # with tag
       -
@@ -110,15 +63,15 @@ jobs:
           tag: ${GITHUB_REF#refs/tags/}
 
           # ↓ split "packages/easy-coding-standard" directory
-          package_directory: 'src/${{ matrix.package.local_path }}'
+          package_directory: '${{ matrix.package_dir }}/${{ matrix.package.local_path }}'
 
           # ↓ into https://github.com/symplify/easy-coding-standard repository
-          repository_organization: 'phparm'
+          repository_organization: '${{ matrix.main_repo }}'
           repository_name: '${{ matrix.package.split_repository }}'
 
           # [optional, with "github.com" as default]
           #repository_host: git.private.com:1234
 
           # ↓ the user signed under the split commit
-          user_name: "GHJayce"
-          user_email: "jaycedeng@outlook.com"
+          user_name: "${{ matrix.commit_name }}"
+          user_email: "${{ matrix.commit_email }}"
