@@ -13,11 +13,11 @@ env:
 
 jobs:
 
-  packages_split_pack-a:
+  packages_split:
     runs-on: ubuntu-latest
     env:
       main_repo: 'phparm'
-      package_dir_base: 'src'
+      package_dir: 'src'
       commit_name: 'GHJayce'
       commit_email: 'jaycedeng@outlook.com'
 
@@ -42,18 +42,18 @@ jobs:
         uses: danharrin/monorepo-split-github-action@v2.4.0
         with:
           # ↓ split "packages/easy-coding-standard" directory
-          package_directory: "$package_dir/${{ matrix.package.local_path }}"
+          package_directory: '${{ env.package_dir }}/${{ matrix.package.local_path }}'
 
           # ↓ into https://github.com/symplify/easy-coding-standard repository
-          repository_organization: "$main_repo"
+          repository_organization: '${{ env.main_repo }}'
           repository_name: '${{ matrix.package.split_repository }}'
 
           # [optional, with "github.com" as default]
           #repository_host: git.private.com:1234
 
           # ↓ the user signed under the split commit
-          user_name: "$commit_name"
-          user_email: "$commit_email"
+          user_name: '${{ env.commit_name }}'
+          user_email: '${{ env.commit_email }}'
 
       # with tag
       -
@@ -63,15 +63,15 @@ jobs:
           tag: ${GITHUB_REF#refs/tags/}
 
           # ↓ split "packages/easy-coding-standard" directory
-          package_directory: "$package_dir/${{ matrix.package.local_path }}"
+          package_directory: '${{ env.package_dir }}/${{ matrix.package.local_path }}'
 
           # ↓ into https://github.com/symplify/easy-coding-standard repository
-          repository_organization: "$main_repo"
+          repository_organization: '${{ env.main_repo }}'
           repository_name: '${{ matrix.package.split_repository }}'
 
           # [optional, with "github.com" as default]
           #repository_host: git.private.com:1234
 
           # ↓ the user signed under the split commit
-          user_name: "$commit_name"
-          user_email: "$commit_email"
+          user_name: '${{ env.commit_name }}'
+          user_email: '${{ env.commit_email }}'
