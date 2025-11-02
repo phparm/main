@@ -42,10 +42,10 @@ jobs:
         uses: danharrin/monorepo-split-github-action@v2.4.0
         with:
           # ↓ split "packages/easy-coding-standard" directory
-          package_directory: '$package_dir/${{ matrix.package.local_path }}'
+          package_directory: "$package_dir/${{ matrix.package.local_path }}"
 
           # ↓ into https://github.com/symplify/easy-coding-standard repository
-          repository_organization: '$main_repo'
+          repository_organization: "$main_repo"
           repository_name: '${{ matrix.package.split_repository }}'
 
           # [optional, with "github.com" as default]
@@ -63,10 +63,10 @@ jobs:
           tag: ${GITHUB_REF#refs/tags/}
 
           # ↓ split "packages/easy-coding-standard" directory
-          package_directory: '$package_dir/${{ matrix.package.local_path }}'
+          package_directory: "$package_dir/${{ matrix.package.local_path }}"
 
           # ↓ into https://github.com/symplify/easy-coding-standard repository
-          repository_organization: '$main_repo'
+          repository_organization: "$main_repo"
           repository_name: '${{ matrix.package.split_repository }}'
 
           # [optional, with "github.com" as default]
